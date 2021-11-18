@@ -4,31 +4,31 @@ import Product from "../typeorm/entities/Product";
 import ProductRepository from "../typeorm/repositories/ProductRepository";
 
 interface IRequest {
-  id: string;
-  name: string;
-  quantity: number;
-  price: number;
+    id: string
+    name: string;
+    quantity: number;
+    price: number;     
 }
 
 class UpdateProductService {
-  public async execute({id, name, quantity, price}: IRequest): Promise<Product> {
-    //não podemos atualizar um produto que não existe
+    
+  public async execute({id, name, quantity, price}: IRequest): Promise<Product>{
     const productRepository = getCustomRepository(ProductRepository);
     const productExist = await productRepository.findOne(id);
-    if (!productExist) {
+    if (!productExist){
       throw new AppError(`Produto não existe`, 400);
     }
-    //produto existe
-    //será que o nome existe?
+    // produto existe
+    // será que o nome já existe
     const productName = await productRepository.findByName(name);
-    if(productName) {
+    if (productName){
       throw new AppError(`Já existe produto com este nome`, 400);
     }
-    //podemos atualizar
+    // podemos atualizar
     productExist.name = name;
     productExist.quantity = quantity;
     productExist.price = price;
-    await productRepository.save(productExist) //atualiza pois productExist tem id
+    await productRepository.save(productExist); // atualiza pois productExist tem id
 
     return productExist;
   }
