@@ -30,7 +30,7 @@ class CreateSessionService {
       throw new AppError(`Usuário/senha inválidos`, 400);
     }
     //senha correta
-    //gerar o token para usuário
+    //gerar o token para usuário com a chave privada
     const token = sign({}, 'sdjhauyihrfejdkhfu9rhnjdjdajirewdcb', {
       subject: user.id,
       expiresIn: '1d'
