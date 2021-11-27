@@ -7,9 +7,9 @@ let productRouter = Router();
 let productController = new ProductController();
 
 productRouter.get('/', isAuthenticated, productController.index);
-productRouter.get('/:id', productController.show);
-productRouter.post('/', productController.create);
-productRouter.put('/:id', productController.update);
-productRouter.delete('/:id', productController.delete);
+productRouter.get('/:id', isAuthenticated, productController.show);
+productRouter.post('/', isAuthenticated, productController.create);
+productRouter.put('/:id', isAuthenticated, productController.update);
+productRouter.delete('/:id', isAuthenticated, productController.delete);
 
 export default productRouter;
